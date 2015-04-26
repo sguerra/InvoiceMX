@@ -41,6 +41,7 @@ namespace InvoiceApplication
                 TextReader reader = new StreamReader(xmlPath);
 
                 invoice = (Invoice)serializer.Deserialize(reader);
+                invoice.FilePath = xmlPath;
             }
             catch (Exception e)
             {

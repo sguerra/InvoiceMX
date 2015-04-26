@@ -41,7 +41,9 @@ namespace InvoiceApplication.Entities
 
         [XmlElement("Complemento", typeof(Complement), Namespace = "http://www.sat.gob.mx/cfd/3")]
         public Complement Complement { get; set; }
-        
+
+        public string FilePath { get; set; }
+
         #endregion
     }
 }
