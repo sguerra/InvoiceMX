@@ -22,7 +22,10 @@ namespace InvoiceApplication.Entities
         }
 
         [XmlAttribute("folio")]
-        public int Folio { get; set; }
+        public int Folio {get; set; }
+
+        [XmlAttribute("fecha")]
+        public DateTime Date {get; set; }
 
         [XmlAttribute("subTotal")]
         public double Subtotal { get; set; }
