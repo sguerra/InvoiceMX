@@ -15,7 +15,43 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 
 namespace InvoiceApplication
-{
+{   
+    public class InvoiceList : List<Invoice>
+    {
+        #region Fields
+
+        private Dictionary<string, Func<Invoice, object>> sortPredicates { get; set; }
+ 
+        #endregion
+        #region Constructor
+
+        public InvoiceList()
+        {
+            this.sortPredicates = new Dictionary<string, Func<Invoice, object>>();
+
+            this.sortPredicates.Add("RFC", (x => x.Issuer.RFC));
+            this.sortPredicates.Add("FECHA", (x => x.Date));
+        }
+
+        #endregion
+        #region Methods
+
+        public List<Invoice> sortBy(string text, bool ascending)
+        {
+            if(!this.sortPredicates.ContainsKey(text))
+                return this;
+
+            Func<Invoice, object> predicate = this.sortPredicates[text];
+
+            if (!ascending)
+                return this.OrderByDescending(predicate).ToList();
+
+            return this.OrderBy(predicate).ToList();
+        }
+
+        #endregion
+    }
+
     public partial class MainWindow : Window
     {
         #region Fields
@@ -25,7 +61,7 @@ namespace InvoiceApplication
         #endregion
         #region Properties
 
-        private List<Invoice> Invoices { get; set; }
+        private InvoiceList Invoices { get; set; }
 
         #endregion
         #region Construtor
@@ -40,7 +76,7 @@ namespace InvoiceApplication
 
         private void LoadDirectory(string dirPath) 
         {
-            this.Invoices = new List<Invoice>();
+            this.Invoices = new InvoiceList();
             string[] fileNames = Directory.GetFiles(dirPath);
 
             foreach (string fileName in fileNames)
