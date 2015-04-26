@@ -1,6 +1,7 @@
 ﻿using InvoiceApplication.Entities;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -98,8 +99,8 @@ namespace InvoiceApplication
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            return;
-            string dirPath = "C:\\Invoices\\Julio";
+            //return;
+            string dirPath = "\\\\VBOXSVR\\VB_shared_folder\\2014\\DICIEMBRE\\egreso";
 
             try
             {
@@ -154,6 +155,49 @@ namespace InvoiceApplication
                 System.Windows.MessageBox.Show(string.Format("Existe un comprobantes repetido:\n{0}", repeated.First().UUID), "Revisión completa", MessageBoxButton.OK, MessageBoxImage.Error);
             else
                 System.Windows.MessageBox.Show(string.Format("Existen comprobantes repetidos:\n{0}", string.Join("\n", repeated.Select(x => x.UUID).ToArray())), "Revisión completa", MessageBoxButton.OK, MessageBoxImage.Error);
+        }
+
+        private void SortBy(object sender, RoutedEventArgs e)
+        {
+            TextBlock tsender = (TextBlock)sender;
+            List<Invoice> orderedInvoices = this.Invoices.sortBy(tsender.Text, true);
+
+            this.LbxInvoices.ItemsSource = orderedInvoices;
+        }
+
+
+        private void BtnSaveDirectory_Click(object sender, RoutedEventArgs e)
+        {
+            string outputPath = "\\\\VBOXSVR\\VB_shared_folder\\2014\\DICIEMBRE\\output";
+
+            if (Directory.Exists(outputPath))
+                Directory.Delete(outputPath, true);
+
+            if (!Directory.Exists(outputPath))
+                Directory.CreateDirectory(outputPath);
+
+            foreach(Invoice selectedItem in  this.LbxInvoices.SelectedItems)
+            {
+                string fileName = Path.GetFileName(selectedItem.FilePath);
+                string copyPath = Path.Combine(outputPath, fileName);
+
+                string dirPath = Path.GetDirectoryName(selectedItem.FilePath);
+                string searchPattern = fileName.Replace(".xml", "*.pdf");
+
+                List<string> files = Directory.GetFiles(dirPath, searchPattern).ToList();
+                string pdfPath = files.FirstOrDefault();
+                
+                if(pdfPath!= null)
+                {
+                    string pdfName = Path.GetFileName(pdfPath);
+                    string pdfCopyPath = Path.Combine(outputPath, pdfName);
+                    File.Copy(pdfPath, pdfCopyPath);
+                }
+
+                File.Copy(selectedItem.FilePath, copyPath);
+            }
+
+            Process.Start(outputPath);
         }
 
         #endregion
