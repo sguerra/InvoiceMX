@@ -1,0 +1,84 @@
+﻿<Window x:Class="InvoiceApplication.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Invoice Application" Height="600" Width="800" WindowStartupLocation="CenterScreen" Background="WhiteSmoke" Loaded="Window_Loaded" ResizeMode="NoResize">
+    <Grid Background="Indigo">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="40"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Background="#333333">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="200"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="1" Name="TxtDirectory" IsEnabled="False" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="30" BorderBrush="Indigo"/>
+            <Button Grid.Column="3" Name="BtnLoadDirectory" Content="cargar" Click="BtnLoadDirectory_Click" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold"/>
+        </Grid>
+        <Grid Grid.Row="1" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="100*"/>
+            </Grid.RowDefinitions>
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="250"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="67"/>
+                    <ColumnDefinition Width="65"/>
+                    <ColumnDefinition Width="67"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="UUID" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="1" Text="RFC" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="2" Text="CONCEPTO" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="3" Text="SUBTOTAL" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="4" Text="IMPUESTOS" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
+                <TextBlock Grid.Column="5" Text="TOTAL" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
+            </Grid>
+            <ListBox Name="LbxInvoices" Grid.Row="1" SelectionChanged="LbxInvoices_SelectionChanged" Background="WhiteSmoke">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid HorizontalAlignment="Stretch" Height="50" Width="750">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="250"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="200"/>
+                                <ColumnDefinition Width="67"/>
+                                <ColumnDefinition Width="65"/>
+                                <ColumnDefinition Width="67"/>
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="{Binding UUID}" TextWrapping="Wrap" HorizontalAlignment="Left" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="1" Text="{Binding Issuer.RFC}" TextWrapping="Wrap" HorizontalAlignment="Stretch"/>
+                            <ListBox Grid.Column="2" Name="LbxItems" ItemsSource="{Binding Items}" Background="LightGray"  BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Hidden" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                            <TextBlock Grid.Row="0" Text="{Binding Description}" TextWrapping="Wrap"/>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                            <TextBlock Grid.Column="3" Text="{Binding Subtotal}" TextWrapping="Wrap" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="4" Text="{Binding Taxes.Total}" TextWrapping="Wrap" HorizontalAlignment="Right"/>
+                            <TextBlock Grid.Column="5" Text="{Binding Total}" TextWrapping="Wrap" HorizontalAlignment="Right" FontWeight="SemiBold"/>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+        <Grid Grid.Row="3" Background="#333333">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="10"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="1" Name="BtnPay" Content="poliza" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold"/>
+            <Button Grid.Column="3" Name="BtnCheckRepeated" Content="revisar" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold" Click="BtnCheckRepeated_Click"/>
+        </Grid>
+    </Grid>
+</Window>
