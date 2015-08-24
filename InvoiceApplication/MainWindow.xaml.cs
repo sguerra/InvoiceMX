@@ -1,4 +1,5 @@
 ﻿using InvoiceApplication.Entities;
+using InvoiceApplication.Properties;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -62,6 +63,33 @@ namespace InvoiceApplication
         #endregion
         #region Properties
 
+        private string DefaultDirectory
+        {
+            get 
+            {
+                return Settings.Default.DEFAULT_DIRECTORY;
+            }
+        }
+        private string InputDirectory
+        {
+            get 
+            {
+                return Settings.Default.INPUT_DIRECTORY;
+            }
+            set
+            {
+                Settings.Default.INPUT_DIRECTORY = value;
+                Settings.Default.Save();
+            }
+        }
+        private string OutputDirectory
+        {
+            get
+            {
+                return Path.Combine(this.InputDirectory, "output");
+            }
+        }
+        
         private InvoiceList Invoices { get; set; }
 
         #endregion
@@ -99,8 +127,12 @@ namespace InvoiceApplication
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            return;
-            string dirPath = "\\\\VBOXSVR\\VB_shared_folder\\2014\\DICIEMBRE\\egreso";
+            if (this.InputDirectory.Equals(this.DefaultDirectory)){
+                System.Windows.MessageBox.Show("Bienvenido, selecciona un directorio con tus CFDIs", "InvoiceMX");
+                return;
+            }
+
+            string dirPath = this.InputDirectory;
 
             try
             {
@@ -108,7 +140,7 @@ namespace InvoiceApplication
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message, "Hay un problema");
+                System.Windows.MessageBox.Show(ex.Message, "InvoiceMX");
             }
         }
         private void BtnLoadDirectory_Click(object sender, RoutedEventArgs e)
@@ -122,6 +154,7 @@ namespace InvoiceApplication
                 return;
 
             this.LoadDirectory(dirPath);
+            this.InputDirectory = dirPath;
         }
         private void LbxInvoices_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -164,7 +197,7 @@ namespace InvoiceApplication
         }
         private void BtnSaveDirectory_Click(object sender, RoutedEventArgs e)
         {
-            string outputPath = "\\\\VBOXSVR\\VB_shared_folder\\2014\\DICIEMBRE\\output";
+            string outputPath = this.OutputDirectory;
 
             if (Directory.Exists(outputPath))
                 Directory.Delete(outputPath, true);
