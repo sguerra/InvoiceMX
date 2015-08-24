@@ -99,7 +99,7 @@ namespace InvoiceApplication
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            //return;
+            return;
             string dirPath = "\\\\VBOXSVR\\VB_shared_folder\\2014\\DICIEMBRE\\egreso";
 
             try
@@ -132,7 +132,6 @@ namespace InvoiceApplication
 
             //this.LbxItems.ItemsSource = invoice.Items;
         }
-        
         private void BtnCheckRepeated_Click(object sender, RoutedEventArgs e)
         {
             if (this.Invoices == null)
@@ -156,7 +155,6 @@ namespace InvoiceApplication
             else
                 System.Windows.MessageBox.Show(string.Format("Existen comprobantes repetidos:\n{0}", string.Join("\n", repeated.Select(x => x.UUID).ToArray())), "Revisión completa", MessageBoxButton.OK, MessageBoxImage.Error);
         }
-
         private void SortBy(object sender, RoutedEventArgs e)
         {
             TextBlock tsender = (TextBlock)sender;
@@ -164,8 +162,6 @@ namespace InvoiceApplication
 
             this.LbxInvoices.ItemsSource = orderedInvoices;
         }
-
-
         private void BtnSaveDirectory_Click(object sender, RoutedEventArgs e)
         {
             string outputPath = "\\\\VBOXSVR\\VB_shared_folder\\2014\\DICIEMBRE\\output";

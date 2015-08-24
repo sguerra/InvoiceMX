@@ -1,7 +1,7 @@
 ﻿<Window x:Class="InvoiceApplication.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Invoice Application" Height="600" Width="1000" WindowStartupLocation="CenterScreen" Background="WhiteSmoke" Loaded="Window_Loaded" ResizeMode="NoResize">
+        Title="Invoice MX" Height="600" Width="1100" WindowStartupLocation="CenterScreen" Background="WhiteSmoke" Loaded="Window_Loaded" ResizeMode="NoResize">
     <Grid Background="Indigo">
         <Grid.RowDefinitions>
             <RowDefinition Height="40"/>
@@ -35,9 +35,9 @@
                     <ColumnDefinition Width="200"/>
                     <ColumnDefinition Width="100"/>
                     <ColumnDefinition Width="200"/>
-                    <ColumnDefinition Width="67"/>
-                    <ColumnDefinition Width="65"/>
-                    <ColumnDefinition Width="67"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="100"/>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" Text="UUID" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold"/>
                 <TextBlock Grid.Column="1" Text="FECHA" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" FontWeight="SemiBold" MouseLeftButtonUp="SortBy"/>
@@ -50,15 +50,15 @@
             <ListBox Name="LbxInvoices" Grid.Row="1" SelectionChanged="LbxInvoices_SelectionChanged" Background="WhiteSmoke" SelectionMode="Multiple">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <Grid HorizontalAlignment="Stretch" Height="50" Width="750">
+                        <Grid HorizontalAlignment="Stretch" Height="50">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="250"/>
                                 <ColumnDefinition Width="200"/>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition Width="200"/>
-                                <ColumnDefinition Width="67"/>
-                                <ColumnDefinition Width="65"/>
-                                <ColumnDefinition Width="67"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
                             <TextBlock Grid.Column="0" Text="{Binding UUID}" TextWrapping="Wrap" HorizontalAlignment="Left" FontWeight="SemiBold"/>
                             <TextBlock Grid.Column="1" Text="{Binding Date, StringFormat={}{0:dd/MM/yyyy HH:mm}}" TextWrapping="Wrap" HorizontalAlignment="Center"/>
