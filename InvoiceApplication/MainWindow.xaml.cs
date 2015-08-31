@@ -228,7 +228,52 @@ namespace InvoiceApplication
 
             Process.Start(outputPath);
         }
+        private void BtnPolicy_Click(object sender, RoutedEventArgs e)
+        {
+            string templateFile = "template.txt";
+            string outputFile = "policy.csv";
+
+            string outputPath = this.OutputDirectory;
+            string templateDirectory = Path.Combine(Directory.GetCurrentDirectory(), templateFile);
+
+            // Open template file
+            if (!File.Exists(templateDirectory))
+            {
+                System.Windows.MessageBox.Show(string.Format("No se encontro la plantilla de poliza"), "InvoiceMX");
+                return;
+            }
+
+            // Load values into template
+            string templateString = File.ReadAllText(templateDirectory);
+            string contentValue = string.Empty;
+
+            StringBuilder content = new StringBuilder();
+
+            foreach (Invoice invoice in this.Invoices)
+            {
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, invoice.Issuer.Name.Replace(",", string.Empty), invoice.Subtotal, string.Empty, invoice.UUID, string.Empty);
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, string.Empty, invoice.Taxes.Total, string.Empty, string.Empty, string.Empty);
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, string.Empty, string.Empty, invoice.Total, string.Empty, string.Empty);
+                content.AppendLine();
+            }
+
+            // Save output file 
+            contentValue = templateString.Replace("$content", content.ToString());
+            
+            string filePath = Path.Combine(outputPath, outputFile);
+
+            if (!Directory.Exists(outputPath))
+                Directory.CreateDirectory(outputPath);
+
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+
+            File.WriteAllText(filePath, contentValue);
+            Process.Start(filePath);
+        }
+
 
         #endregion
+
     }
 }
