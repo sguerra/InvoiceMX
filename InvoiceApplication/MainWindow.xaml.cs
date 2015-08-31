@@ -254,7 +254,6 @@ namespace InvoiceApplication
                 content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, invoice.Issuer.Name.Replace(",", string.Empty), invoice.Subtotal, string.Empty, invoice.UUID, string.Empty);
                 content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, string.Empty, invoice.Taxes.Total, string.Empty, string.Empty, string.Empty);
                 content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, string.Empty, string.Empty, invoice.Total, string.Empty, string.Empty);
-                content.AppendLine();
             }
 
             // Save output file 
@@ -268,10 +267,9 @@ namespace InvoiceApplication
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
-            File.WriteAllText(filePath, contentValue);
+            File.WriteAllText(filePath, contentValue, Encoding.UTF8);
             Process.Start(filePath);
         }
-
 
         #endregion
 
