@@ -1,0 +1,2 @@
+﻿cuenta,nombre o concepto,cargo,abono,referencia,conc
+$content
