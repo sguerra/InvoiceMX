@@ -251,9 +251,16 @@ namespace InvoiceApplication
 
             foreach (Invoice invoice in this.Invoices)
             {
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, invoice.Issuer.Name.Replace(",", string.Empty), invoice.Subtotal, string.Empty, invoice.UUID, string.Empty);
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, string.Empty, invoice.Taxes.Total, string.Empty, string.Empty, string.Empty);
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, string.Empty, string.Empty, invoice.Total, string.Empty, string.Empty);
+                string issuerName = invoice.Issuer.Name.Replace(",", string.Empty);
+                string reference = invoice.Folio.ToString();
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, invoice.Subtotal, string.Empty, reference, string.Empty);
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, invoice.Taxes.Total, string.Empty, reference, string.Empty);
+
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, string.Empty, invoice.Total, reference, string.Empty);
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, invoice.Total, string.Empty, reference, string.Empty);
+                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, string.Empty, invoice.Total, reference, string.Empty);
+                
+                content.AppendLine();
             }
 
             // Save output file 
