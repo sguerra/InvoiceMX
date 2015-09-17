@@ -25,5 +25,5 @@ Invoice application for managing CFDI files (.NET)
 ### Preview
 
 <center>
-	<img src="./screenshot.png" width="80%"/>
+	<img src="./screenshot.png" width="90%"/>
 </center>
