@@ -29,6 +29,7 @@ namespace InvoiceApplication.Entities
 
         [XmlAttribute("Moneda")]
         public string Currency { get; set; }
+
         [XmlAttribute("subTotal")]
         public double Subtotal { get; set; }
         [XmlAttribute("total")]

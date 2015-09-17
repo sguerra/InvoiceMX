@@ -69,6 +69,7 @@
     <Compile Include="Entities\Item.cs" />
     <Compile Include="Entities\Invoice.cs" />
     <Compile Include="Entities\Taxes.cs" />
+    <Compile Include="Entities\TaxRetention.cs" />
     <Compile Include="InvoiceProvider.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

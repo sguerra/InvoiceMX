@@ -13,6 +13,10 @@ namespace InvoiceApplication.Entities
         [XmlAttribute("totalImpuestosTrasladados")]
         public double Total { get; set; }
 
+        [XmlArray("Retenciones", Namespace = "http://www.sat.gob.mx/cfd/3")]
+        [XmlArrayItem("Retencion", typeof(TaxRetention), Namespace = "http://www.sat.gob.mx/cfd/3")]
+        public List<TaxRetention> Retentions { get; set; }
+
         #endregion
     }
 }
