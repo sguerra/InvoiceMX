@@ -258,17 +258,21 @@ namespace InvoiceApplication
 
             foreach (Invoice invoice in this.Invoices)
             {
+                // Get Invoice info
                 string invoiceFolio = string.Format("{0}", invoice.Folio);
+                string invoiceDate = string.Format("{0}", invoice.Date.ToShortDateString());
                 string invoiceSubtotal = string.Format("{0}", invoice.Subtotal);
                 string invoiceTotal = string.Format("{0}", invoice.Total);
                 string invoiceIssuerName = invoice.Issuer.Name.Replace(",", string.Empty);
                 string invoiceTaxesTotal = string.Format("{0}", invoice.Taxes.Total);
 
+                // Replace format markers
                 foreach (string movementLine in movementLines)
                 {
                     string formattedLine = movementLine;
 
                     formattedLine = formattedLine.Replace("invoice.folio", invoiceFolio);
+                    formattedLine = formattedLine.Replace("invoice.date", invoiceDate);
                     formattedLine = formattedLine.Replace("invoice.subtotal", invoiceSubtotal);
                     formattedLine = formattedLine.Replace("invoice.total", invoiceTotal);
                     formattedLine = formattedLine.Replace("invoice.issuer.name", invoiceIssuerName);
