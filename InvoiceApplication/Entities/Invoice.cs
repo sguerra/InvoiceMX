@@ -27,6 +27,8 @@ namespace InvoiceApplication.Entities
         [XmlAttribute("fecha")]
         public DateTime Date {get; set; }
 
+        [XmlAttribute("Moneda")]
+        public string Currency { get; set; }
         [XmlAttribute("subTotal")]
         public double Subtotal { get; set; }
         [XmlAttribute("total")]
