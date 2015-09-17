@@ -89,6 +89,13 @@ namespace InvoiceApplication
                 return Path.Combine(this.InputDirectory, "output");
             }
         }
+        private string TemplateDirectory
+        {
+            get
+            {
+                return Path.Combine(Directory.GetCurrentDirectory(), Settings.Default.TEMPLATE_DIRNAME);
+            }
+        }
         
         private InvoiceList Invoices { get; set; }
 
@@ -230,52 +237,61 @@ namespace InvoiceApplication
         }
         private void BtnPolicy_Click(object sender, RoutedEventArgs e)
         {
-            string templateFile = "template.txt";
-            string outputFile = "policy.csv";
-
             string outputPath = this.OutputDirectory;
-            string templateDirectory = Path.Combine(Directory.GetCurrentDirectory(), templateFile);
 
-            // Open template file
-            if (!File.Exists(templateDirectory))
+            string templateFile = Path.Combine(this.TemplateDirectory, "template.txt");
+            string movementFile = Path.Combine(this.TemplateDirectory, "movement.txt");
+            string outputFile = Path.Combine(outputPath, "policy.csv");
+
+            if (!File.Exists(templateFile))
             {
                 System.Windows.MessageBox.Show(string.Format("No se encontro la plantilla de poliza"), "InvoiceMX");
                 return;
             }
 
             // Load values into template
-            string templateString = File.ReadAllText(templateDirectory);
+            string templateString = File.ReadAllText(templateFile);
+            string[] movementLines = File.ReadAllLines(movementFile);
             string contentValue = string.Empty;
 
             StringBuilder content = new StringBuilder();
 
             foreach (Invoice invoice in this.Invoices)
             {
-                string issuerName = invoice.Issuer.Name.Replace(",", string.Empty);
-                string reference = invoice.Folio.ToString();
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, invoice.Subtotal, string.Empty, reference, string.Empty);
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, invoice.Taxes.Total, string.Empty, reference, string.Empty);
+                string invoiceFolio = string.Format("{0}", invoice.Folio);
+                string invoiceSubtotal = string.Format("{0}", invoice.Subtotal);
+                string invoiceTotal = string.Format("{0}", invoice.Total);
+                string invoiceIssuerName = invoice.Issuer.Name.Replace(",", string.Empty);
+                string invoiceTaxesTotal = string.Format("{0}", invoice.Taxes.Total);
 
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, string.Empty, invoice.Total, reference, string.Empty);
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, invoice.Total, string.Empty, reference, string.Empty);
-                content.AppendFormat("{0},{1},{2},{3},{4},\r\n", string.Empty, issuerName, string.Empty, invoice.Total, reference, string.Empty);
-                
-                content.AppendLine();
+                foreach (string movementLine in movementLines)
+                {
+                    string formattedLine = movementLine;
+
+                    formattedLine = formattedLine.Replace("invoice.folio", invoiceFolio);
+                    formattedLine = formattedLine.Replace("invoice.subtotal", invoiceSubtotal);
+                    formattedLine = formattedLine.Replace("invoice.total", invoiceTotal);
+                    formattedLine = formattedLine.Replace("invoice.issuer.name", invoiceIssuerName);
+                    formattedLine = formattedLine.Replace("invoice.taxes.total", invoiceTaxesTotal);
+
+                    content.AppendLine(formattedLine);
+                }
             }
 
             // Save output file 
             contentValue = templateString.Replace("$content", content.ToString());
             
-            string filePath = Path.Combine(outputPath, outputFile);
-
+            // Create Directory if not exists
             if (!Directory.Exists(outputPath))
                 Directory.CreateDirectory(outputPath);
 
-            if (File.Exists(filePath))
-                File.Delete(filePath);
+            // Delete File if already exists
+            if (File.Exists(outputFile))
+                File.Delete(outputFile);
 
-            File.WriteAllText(filePath, contentValue, Encoding.UTF8);
-            Process.Start(filePath);
+            // Wrtite & Open Output File 
+            File.WriteAllText(outputFile, contentValue, Encoding.UTF8);
+            Process.Start(outputFile);
         }
 
         #endregion

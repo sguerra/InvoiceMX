@@ -1,0 +1,6 @@
+﻿,invoice.issuer.name,invoice.subtotal,,invoice.folio,
+,invoice.issuer.name,invoice.taxes.total,,invoice.folio,
+,invoice.issuer.name,,invoice.total,invoice.folio,
+,invoice.issuer.name,invoice.total,,invoice.folio,
+,invoice.issuer.name,,invoice.total,invoice.folio,
+,

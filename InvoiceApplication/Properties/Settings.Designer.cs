@@ -46,5 +46,17 @@ namespace InvoiceApplication.Properties {
                 this["DEFAULT_DIRECTORY"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Templates")]
+        public string TEMPLATE_DIRNAME {
+            get {
+                return ((string)(this["TEMPLATE_DIRNAME"]));
+            }
+            set {
+                this["TEMPLATE_DIRNAME"] = value;
+            }
+        }
     }
 }
