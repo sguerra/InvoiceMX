@@ -1,2 +1,2 @@
-﻿cuenta,nombre o concepto,cargo,abono,referencia,conc
+﻿FECHA,TIPO DE POLIZA,NO DE POLIZA,CTA,NATURALEZA,IMP. CARGO/ABONO,DESCRIPCIÓN,IDENTIFICADOR
 $content
