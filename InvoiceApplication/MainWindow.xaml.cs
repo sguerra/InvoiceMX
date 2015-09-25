@@ -297,6 +297,70 @@ namespace InvoiceApplication
             File.WriteAllText(outputFile, contentValue, Encoding.UTF8);
             Process.Start(outputFile);
         }
+        private void BtnConcepts_Click(object sender, RoutedEventArgs e)
+        {
+            string outputPath = this.OutputDirectory;
+
+            string headerFile = Path.Combine(this.TemplateDirectory, "Concepts/header.txt");
+            string bodyFile = Path.Combine(this.TemplateDirectory, "Concepts/body.txt");
+            string outputFile = Path.Combine(outputPath, "concepts.csv");
+
+            if (!File.Exists(headerFile))
+            {
+                System.Windows.MessageBox.Show(string.Format("No se encontro la plantilla de poliza"), "InvoiceMX");
+                return;
+            }
+
+            // Load values into template
+            string templateString = File.ReadAllText(headerFile);
+            string conceptDefinition = File.ReadAllText(bodyFile);
+            string contentValue = string.Empty;
+            StringBuilder content = new StringBuilder();
+
+            foreach (Invoice invoice in this.Invoices)
+            {
+                // Get Invoice info
+                string invoiceFolio = invoice.Folio.ToString();
+                string invoiceDate = invoice.Date.ToShortDateString();
+                string invoiceIssuerRFC = invoice.Issuer.RFC;
+                string invoiceIssuerName = invoice.Issuer.Name.Replace(",", string.Empty);
+                   
+                // Replace format markers
+                foreach (Item item in invoice.Items)
+                {
+                    string formattedLine = conceptDefinition;
+
+                    formattedLine = formattedLine.Replace("invoice.folio", invoiceFolio);
+                    formattedLine = formattedLine.Replace("invoice.date", invoiceDate);
+                    formattedLine = formattedLine.Replace("invoice.issuer.rfc", invoiceIssuerRFC);
+                    formattedLine = formattedLine.Replace("invoice.issuer.name", invoiceIssuerName);
+
+                    formattedLine = formattedLine.Replace("invoice.item.description", item.Description);
+                    formattedLine = formattedLine.Replace("invoice.item.quantity", item.Quantity.ToString());
+                    formattedLine = formattedLine.Replace("invoice.item.unity", item.Unity);
+                    formattedLine = formattedLine.Replace("invoice.item.unitprice", item.UnitPrice.ToString());
+                    formattedLine = formattedLine.Replace("invoice.item.total", item.Total.ToString());
+
+                    content.AppendLine(formattedLine);
+                }
+
+            }
+
+            // Save output file 
+            contentValue = templateString.Replace("$body", content.ToString());
+
+            // Create Directory if not exists
+            if (!Directory.Exists(outputPath))
+                Directory.CreateDirectory(outputPath);
+
+            // Delete File if already exists
+            if (File.Exists(outputFile))
+                File.Delete(outputFile);
+
+            // Wrtite & Open Output File 
+            File.WriteAllText(outputFile, contentValue, Encoding.UTF8);
+            Process.Start(outputFile);
+        }
 
         #endregion
 

@@ -103,9 +103,12 @@
                 <ColumnDefinition Width="10"/>
                 <ColumnDefinition Width="100"/>
                 <ColumnDefinition Width="10"/>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="10"/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="1" Name="BtnPay" Content="poliza" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold" Click="BtnPolicy_Click"/>
-            <Button Grid.Column="3" Name="BtnCheckRepeated" Content="revisar" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold" Click="BtnCheckRepeated_Click"/>
+            <Button Grid.Column="1" Name="BtnConcets" Content="conceptos" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold" Click="BtnConcepts_Click"/>
+            <Button Grid.Column="3" Name="BtnPay" Content="poliza" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold" Click="BtnPolicy_Click"/>
+            <Button Grid.Column="5" Name="BtnCheckRepeated" Content="revisar" VerticalAlignment="Center" Height="30" Background="WhiteSmoke" FontWeight="SemiBold" Click="BtnCheckRepeated_Click"/>
         </Grid>
     </Grid>
 </Window>

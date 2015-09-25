@@ -1,0 +1,1 @@
+﻿invoice.date,,invoice.folio,invoice.issuer.rfc,invoice.issuer.name,invoice.item.description,invoice.item.quantity,invoice.item.unity,invoice.item.unitprice,invoice.item.total
